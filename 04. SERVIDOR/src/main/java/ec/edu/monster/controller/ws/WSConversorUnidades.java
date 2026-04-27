@@ -1,26 +1,26 @@
 package ec.edu.monster.controller.ws;
 
-import ec.edu.monster.model.utilidades.enums.UnidadTemperatura;
-import ec.edu.monster.model.utilidades.enums.UnidadMasa;
-import ec.edu.monster.model.utilidades.enums.UnidadLongitud;
-import ec.edu.monster.model.utilidades.ConversorTemperatura;
-import ec.edu.monster.model.utilidades.ConversorMasa;
-import ec.edu.monster.model.utilidades.ConversorLongitud;
+import ec.edu.monster.controller.ws.dto.ConversionRequest;
+import ec.edu.monster.controller.ws.dto.ConversionResponse;
+import ec.edu.monster.controller.ws.dto.MensajeResponse;
 import ec.edu.monster.model.servicios.ServicioConversor;
+import ec.edu.monster.model.utilidades.ConversorLongitud;
+import ec.edu.monster.model.utilidades.ConversorMasa;
+import ec.edu.monster.model.utilidades.ConversorTemperatura;
+import ec.edu.monster.model.utilidades.enums.UnidadLongitud;
+import ec.edu.monster.model.utilidades.enums.UnidadMasa;
+import ec.edu.monster.model.utilidades.enums.UnidadTemperatura;
 import ec.edu.monster.model.utilidades.mapeadores.UnidadMapper;
-import ec.edu.monster.seguridad.AdministradorCredenciales;
-import ec.edu.monster.seguridad.AdministradorTokens;
-
-import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/conversor-unidades")
+@Path("/conversiones")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class WSConversorUnidades {
 
     private final ServicioConversor<UnidadLongitud> servicioLongitud =
@@ -33,120 +33,74 @@ public class WSConversorUnidades {
             new ServicioConversor<>(new ConversorTemperatura());
 
     @POST
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response login(
-            @QueryParam("usuario") String usuario,
-            @QueryParam("contrasenia") String contrasenia) {
-
-        if (usuario == null || usuario.isBlank() || contrasenia == null || contrasenia.isBlank()) {
-            return construirRespuestaError(Response.Status.BAD_REQUEST, "Usuario y contrasenia son obligatorios");
-        }
-
-        if (AdministradorCredenciales.validarCredenciales(usuario, contrasenia)) {
-            String token = AdministradorTokens.generarToken();
-            return construirRespuestaOk("token", token);
-        }
-
-        return construirRespuestaError(Response.Status.UNAUTHORIZED, "Credenciales incorrectas");
-    }
-
-    @PUT
-    @Path("/cambiarContrasenia")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response cambiarContrasenia(
-            @QueryParam("contraseniaActual") String contraseniaActual,
-            @QueryParam("contraseniaNueva") String contraseniaNueva) {
+    @Path("/longitud")
+    public Response convertirLongitud(ConversionRequest request) {
         try {
-            AdministradorCredenciales.cambiarContrasenia(contraseniaActual, contraseniaNueva);
-            return construirRespuestaOk("mensaje", "Contrasenia actualizada correctamente");
+            validarDatosConversion(request);
+            UnidadLongitud origen = UnidadMapper.toLongitud(request.getUnidadOrigen());
+            UnidadLongitud destino = UnidadMapper.toLongitud(request.getUnidadDestino());
+
+            double resultado = servicioLongitud.convertir(request.getValor(), origen, destino);
+            return Response.ok(crearRespuesta(request, resultado)).build();
         } catch (RuntimeException e) {
             return construirRespuestaError(Response.Status.BAD_REQUEST, e.getMessage());
         }
     }
 
-    @GET
-    @Path("/convertirLongitud")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertirLongitud(
-            @QueryParam("valor") Double valor,
-            @QueryParam("unidadInicial") String unidadInicial,
-            @QueryParam("unidadFinal") String unidadFinal) {
+    @POST
+    @Path("/masa")
+    public Response convertirMasa(ConversionRequest request) {
         try {
-            validarDatosConversion(valor, unidadInicial, unidadFinal);
-            UnidadLongitud origen = UnidadMapper.toLongitud(unidadInicial);
-            UnidadLongitud destino = UnidadMapper.toLongitud(unidadFinal);
+            validarDatosConversion(request);
+            UnidadMasa origen = UnidadMapper.toMasa(request.getUnidadOrigen());
+            UnidadMasa destino = UnidadMapper.toMasa(request.getUnidadDestino());
 
-            double resultado = servicioLongitud.convertir(valor, origen, destino);
-            return construirRespuestaOk("resultado", resultado);
+            double resultado = servicioMasa.convertir(request.getValor(), origen, destino);
+            return Response.ok(crearRespuesta(request, resultado)).build();
         } catch (RuntimeException e) {
             return construirRespuestaError(Response.Status.BAD_REQUEST, e.getMessage());
         }
     }
 
-    @GET
-    @Path("/convertirMasa")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertirMasa(
-            @QueryParam("valor") Double valor,
-            @QueryParam("unidadInicial") String unidadInicial,
-            @QueryParam("unidadFinal") String unidadFinal) {
+    @POST
+    @Path("/temperatura")
+    public Response convertirTemperatura(ConversionRequest request) {
         try {
-            validarDatosConversion(valor, unidadInicial, unidadFinal);
-            UnidadMasa origen = UnidadMapper.toMasa(unidadInicial);
-            UnidadMasa destino = UnidadMapper.toMasa(unidadFinal);
+            validarDatosConversion(request);
+            UnidadTemperatura origen = UnidadMapper.toTemperatura(request.getUnidadOrigen());
+            UnidadTemperatura destino = UnidadMapper.toTemperatura(request.getUnidadDestino());
 
-            double resultado = servicioMasa.convertir(valor, origen, destino);
-            return construirRespuestaOk("resultado", resultado);
+            double resultado = servicioTemperatura.convertir(request.getValor(), origen, destino);
+            return Response.ok(crearRespuesta(request, resultado)).build();
         } catch (RuntimeException e) {
             return construirRespuestaError(Response.Status.BAD_REQUEST, e.getMessage());
         }
     }
 
-    @GET
-    @Path("/convertirTemperatura")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertirTemperatura(
-            @QueryParam("valor") Double valor,
-            @QueryParam("unidadInicial") String unidadInicial,
-            @QueryParam("unidadFinal") String unidadFinal) {
-        try {
-            validarDatosConversion(valor, unidadInicial, unidadFinal);
-            UnidadTemperatura origen = UnidadMapper.toTemperatura(unidadInicial);
-            UnidadTemperatura destino = UnidadMapper.toTemperatura(unidadFinal);
-
-            double resultado = servicioTemperatura.convertir(valor, origen, destino);
-            return construirRespuestaOk("resultado", resultado);
-        } catch (RuntimeException e) {
-            return construirRespuestaError(Response.Status.BAD_REQUEST, e.getMessage());
-        }
-    }
-
-    private static void validarDatosConversion(Double valor, String unidadInicial, String unidadFinal) {
-        if (valor == null || unidadInicial == null || unidadInicial.isBlank() || unidadFinal == null || unidadFinal.isBlank()) {
+    private static void validarDatosConversion(ConversionRequest request) {
+        if (request == null
+                || request.getValor() == null
+                || request.getUnidadOrigen() == null
+                || request.getUnidadOrigen().isBlank()
+                || request.getUnidadDestino() == null
+                || request.getUnidadDestino().isBlank()) {
             throw new RuntimeException("Valor y unidades son obligatorios");
         }
     }
 
-    private static Response construirRespuestaOk(String clave, String valor) {
-        String json = "{\"" + escaparJson(clave) + "\":\"" + escaparJson(valor) + "\"}";
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
-    }
-
-    private static Response construirRespuestaOk(String clave, double valor) {
-        String json = "{\"" + escaparJson(clave) + "\":" + valor + "}";
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    private static ConversionResponse crearRespuesta(ConversionRequest request, double valorConvertido) {
+        ConversionResponse respuesta = new ConversionResponse();
+        respuesta.setValorOriginal(request.getValor());
+        respuesta.setUnidadOrigen(request.getUnidadOrigen());
+        respuesta.setValorConvertido(valorConvertido);
+        respuesta.setUnidadDestino(request.getUnidadDestino());
+        return respuesta;
     }
 
     private static Response construirRespuestaError(Response.Status estado, String mensaje) {
-        String json = "{\"mensaje\":\"" + escaparJson(mensaje) + "\"}";
-        return Response.status(estado).entity(json).type(MediaType.APPLICATION_JSON).build();
-    }
-
-    private static String escaparJson(String texto) {
-        if (texto == null) {
-            return "";
-        }
-        return texto.replace("\\", "\\\\").replace("\"", "\\\"");
+        return Response.status(estado)
+                .entity(new MensajeResponse(mensaje))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 }

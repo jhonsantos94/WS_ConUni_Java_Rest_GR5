@@ -13,6 +13,7 @@ public class ConfiguracionRest extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> clasesRegistradas = new HashSet<>();
         clasesRegistradas.add(WSConversorUnidades.class);
+        clasesRegistradas.add(WSSeguridad.class);
         clasesRegistradas.add(ManejadorAutenticacion.class);
         return clasesRegistradas;
     }

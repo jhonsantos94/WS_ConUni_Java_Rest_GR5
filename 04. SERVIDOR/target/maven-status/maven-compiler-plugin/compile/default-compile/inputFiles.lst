@@ -1,6 +1,13 @@
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\manejadoresws\ManejadorAutenticacion.java
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\ConfiguracionRest.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\CambiarContrasenaRequest.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\ConversionRequest.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\ConversionResponse.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\LoginRequest.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\LoginResponse.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\dto\MensajeResponse.java
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\WSConversorUnidades.java
+C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\controller\ws\WSSeguridad.java
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\model\servicios\ServicioConversor.java
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\model\utilidades\ConversorLongitud.java
 C:\proyectos_arqui\taller1\WS_ConUni_Java_Rest_GR5\04. SERVIDOR\src\main\java\ec\edu\monster\model\utilidades\ConversorMasa.java
