@@ -29,7 +29,7 @@ public class AdaptadorConversionJavaSoap : IAdaptadorConversion
         string valorFormateado = peticion.Valor.ToString(CultureInfo.InvariantCulture);
 
         // 1. Construir el sobre SOAP incluyendo el Token en el Header
-        string soapXml = $@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:ws=""http://ws.controller.monster.edu.ec/"">
+        string soapXml = $@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:ws=""http://ws.controlador.monster.edu.ec/"">
                                <soapenv:Header>
                                   <ws:token>{token}</ws:token>
                                </soapenv:Header>

@@ -10,4 +10,5 @@
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>ec.edu.monster.Clicon</exec.mainClass>
     </properties>
+    <name>ConversionUnidades_ClienteConsola_GR5</name>
 </project>

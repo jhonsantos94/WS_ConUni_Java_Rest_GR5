@@ -7,6 +7,8 @@ package ec.edu.monster;
 import ec.edu.monster.controlador.ControladorAplicacion;
 import ec.edu.monster.modelos.ModeloClienteRest;
 import ec.edu.monster.vistas.LoginVista;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -15,7 +17,7 @@ import ec.edu.monster.vistas.LoginVista;
 public class Clicon {
 
     public static void main(String[] args) {
-        
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         ControladorAplicacion controladorCentral = new ControladorAplicacion();
         
         LoginVista vistaLogin = new LoginVista(controladorCentral);

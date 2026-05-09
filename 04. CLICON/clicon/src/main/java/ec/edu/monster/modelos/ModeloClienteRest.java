@@ -45,7 +45,7 @@ public class ModeloClienteRest {
     }
 
     public void cambiarContrasenia(String contraseniaActual, String contraseniaNueva) throws Exception {
-        String jsonPeticion = String.format("{\"ContraseniaActual\": \"%s\", \"NuevaContrasenia\": \"%s\"}", contraseniaActual, contraseniaNueva);
+        String jsonPeticion = String.format("{\"ContrasenaActual\": \"%s\", \"NuevaContrasena\": \"%s\"}", contraseniaActual, contraseniaNueva);
 
         HttpRequest peticion = HttpRequest.newBuilder()
                 .uri(URI.create(URL_BASE + "/seguridad/cambiar-contrasena"))

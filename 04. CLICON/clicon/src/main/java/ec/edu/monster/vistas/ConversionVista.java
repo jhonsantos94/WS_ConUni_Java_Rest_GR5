@@ -76,19 +76,35 @@ public class ConversionVista {
     }
 
     private void cambiarContrasenia() {
+        String nueva = "";
+        String nueva_conf = "";
         System.out.print("\nContraseña actual: ");
         String actual = escaner.nextLine();
-        System.out.print("Nueva contraseña: ");
-        String nueva = escaner.nextLine();
+        while (true) {
+            System.out.print("Nueva contraseña (o '-1' para cancelar): ");
+            nueva = escaner.nextLine();
+
+            if (nueva.equals("-1")) {
+                System.out.println("Operación cancelada. Regresando al menú...");
+                return;
+            }
+
+            System.out.print("Confirmar contraseña: ");
+            nueva_conf = escaner.nextLine();
+
+            if (nueva.equals(nueva_conf)) {
+                break; 
+            } else {
+                System.out.println("Las contraseñas no coinciden. Intente nuevamente.\n");
+            }
+        }
 
         try {
             // Delegamos el cambio al controlador
             controlador.cambiarContrasenia(actual, nueva);
             System.out.println("Contraseña actualizada correctamente.");
-            System.out.println("Por seguridad, la sesión se ha cerrado. Vuelva a ingresar.");
+            System.out.println("Por seguridad, cierre su sesion y vuelva a ingresar.");
             
-            // Forzamos la salida al menú principal engañando al bucle
-            System.exit(0); // Opcional: Si prefieres que regrese al login suavemente, ajusta la lógica del do-while.
         } catch (Exception ex) {
             System.out.println("ERROR: " + ex.getMessage());
         }

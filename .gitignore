@@ -1,1 +1,85 @@
+# =====================================================
+# 1. FRONTEND: .NET MAUI (C# / Visual Studio)
+# =====================================================
+# Carpetas de compilación
+**/bin/
+**/obj/
+
+# Archivos temporales y cachés de Visual Studio / Rider
+.vs/
+*.user
+*.suo
+*.dbmdl
+*.jfm
+*.pfx
+*.publishsettings
+
+# Archivos de empaquetado móvil (Android / iOS)
+*.apk
+*.aab
+*.ipa
+*.xap
+
+# Resultados de pruebas
+TestResults/
+
+# =====================================================
+# 2. BACKEND Y CLIENTE CONSOLA: JAVA (Maven / REST)
+# =====================================================
+# Carpetas de compilación de Maven (Incluye la que solicitaste)
+**/target/
 /04. CLICON/clicon/target/
+*.class
+
+# Archivos empaquetados Java
+*.jar
+*.war
+*.ear
+
+# Logs de Payara/Glassfish o de la aplicación
+*.log
+
+# =====================================================
+# 3. CONFIGURACIONES LOCALES DE IDEs JAVA
+# =====================================================
+# NetBeans
+nbproject/private/
+build/
+nbactions.xml
+nb-configuration.xml
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# Visual Studio Code
+.vscode/
+
+# =====================================================
+# 4. SISTEMAS OPERATIVOS GLOBALES
+# =====================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+/target/
+/04. SERVIDOR/target/
+/04. CLIENTE WEB/CWConUniJavaGR5/target/
+/04. CLIESC/ConversionUnidades_ClienteEscritorio_GR5/target/
+/04. CLIESC/target/
+/04.SERVIDOR/target/
+/04. CLICON/target/
